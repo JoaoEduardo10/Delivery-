@@ -1,0 +1,31 @@
+.button {
+  padding: 1rem;
+  background-color: $blue;
+  color: $white;
+  border: none;
+  transition: all 300ms ease-in-out;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: $white;
+  color: red;
+  border: 0.1rem solid $blue;
+}
+
+.button-conteiner-position {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14rem;
+  transform: translateX(-40%);
+
+  @media (max-width: 480px) {
+    transform: translateX(-50%);
+  }
+}
+
+.button-conteiner {
+  width: 100%;
+  height: 100%;
+}

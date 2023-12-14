@@ -1,0 +1,32 @@
+.balls-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  height: 100vh;
+}
+
+.balls-items {
+  width: 5rem;
+  height: 5rem;
+  margin: 1.3rem;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0.5rem $blue, 0 0 5rem $blue, 0 0 10rem $blue;
+  animation: animar calc(60s / var(--i)) linear infinite;
+
+  &:nth-last-of-type(even) {
+    background-color: $interativa_segundaryColor;
+    box-shadow: 0 0 0 0.5rem $interativa_segundaryColor,
+      0 0 5rem $interativa_segundaryColor, 0 0 10rem $interativa_segundaryColor;
+  }
+
+  @keyframes animar {
+    0% {
+      transform: translateY(-100vh) scale(1);
+    }
+
+    100% {
+      transform: translateY(100vh) scale(0);
+    }
+  }
+}
