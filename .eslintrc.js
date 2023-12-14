@@ -7,6 +7,7 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
+    'plugin:storybook/recommended',
   ],
   overrides: [
     {
@@ -29,5 +30,6 @@ module.exports = {
     indent: ['error', 2],
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
+    'storybook/story-exports': 'off',
   },
 };
