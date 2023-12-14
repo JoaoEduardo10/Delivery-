@@ -1,12 +1,10 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "../styles/index.scss";
-
-const inter = Inter({ subsets: ["latin"] });
+import React from 'react';
+import type { Metadata } from 'next';
+import '../styles/index.scss';
 
 export const metadata: Metadata = {
-  title: "interativa-delivery",
-  description: "registrador de entregas da interativa",
+  title: 'interativa-delivery',
+  description: 'registrador de entregas da interativa',
 };
 
 export default function RootLayout({
