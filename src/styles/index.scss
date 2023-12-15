@@ -1,5 +1,7 @@
-@import "./variables.scss";
-@import "./global.scss";
+@import './variables.scss';
+@import './global.scss';
 
-@import "components/balls.scss";
-@import "./components/button.scss";
+@import './template/home.scss';
+
+@import 'components/balls.scss';
+@import './components/button.scss';

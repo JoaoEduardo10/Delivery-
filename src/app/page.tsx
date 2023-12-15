@@ -1,5 +1,6 @@
+import { TemplateHome } from '@/template/home/home';
 import React from 'react';
 
 export default function Home() {
-  return <h1>ok</h1>;
+  return <TemplateHome />;
 }
