@@ -1,0 +1,32 @@
+.conteiner_input {
+  position: relative;
+  width: 100%;
+  height: 6rem;
+
+  label {
+    position: absolute;
+    top: 30%;
+    left: 1%;
+    transition: all 300ms ease-in-out;
+    text-transform: uppercase;
+  }
+
+  input {
+    width: 98%;
+    height: 100%;
+    padding: 0 2rem;
+    border: none;
+    outline: none;
+    background: transparent;
+    border-bottom: 0.1rem solid #222;
+  }
+
+  .focus_label {
+    top: -5%;
+  }
+
+  .blur_label {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}

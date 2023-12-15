@@ -39,6 +39,10 @@ const parseQueryString = () => {
     return null;
   }
 
+  const new_username = decodeURIComponent(user.username);
+
+  user.username = new_username;
+
   return user;
 };
 
