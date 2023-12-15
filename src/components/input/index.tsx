@@ -1,10 +1,11 @@
+import { formatPhoneNumber } from '../../helpers/formatPhoneNumber.ts/index.js';
 import React, { useEffect, useState } from 'react';
 import { v1 as uuid } from 'uuid';
 
 const id = uuid();
 
 export interface InputProps {
-  type: 'text' | 'email';
+  type: 'text' | 'email' | 'tel';
   label_name: string;
   onChange: (value: string) => void;
   clear: boolean;
@@ -13,6 +14,7 @@ export interface InputProps {
 export const Input = ({ type, label_name, onChange, clear }: InputProps) => {
   const [value, setValue] = useState('');
   const [focus, setFocus] = useState(false);
+  const [actualKey, setActualKey] = useState('');
 
   useEffect(() => {
     onChange(value);
@@ -35,6 +37,22 @@ export const Input = ({ type, label_name, onChange, clear }: InputProps) => {
     setFocus(false);
   };
 
+  const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    if (type == 'tel') {
+      if (actualKey !== 'Backspace') {
+        const numberFormatted = formatPhoneNumber(value);
+
+        setValue(numberFormatted);
+        return;
+      }
+
+      setValue(value);
+    }
+
+    setValue(value);
+  };
+
   return (
     <div aria-label="conteiner input" className="conteiner_input">
       <label
@@ -48,10 +66,11 @@ export const Input = ({ type, label_name, onChange, clear }: InputProps) => {
         aria-label="input"
         type={type}
         id={id}
-        onChange={({ target }) => setValue(target.value)}
+        onChange={handleChangeInput}
         value={value}
         onFocus={handleFocus}
         onBlur={hanldeBlur}
+        onKeyDown={({ key }) => setActualKey(key)}
       />
     </div>
   );

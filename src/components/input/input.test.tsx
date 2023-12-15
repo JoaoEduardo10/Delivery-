@@ -49,6 +49,27 @@ describe('<Input />', () => {
     expect(input).toHaveAttribute('type', 'email');
   });
 
+  it('should render Input compoent with type tel', () => {
+    const handleChange = vi.fn();
+
+    renderTheme({
+      children: (
+        <Input
+          clear={false}
+          label_name="test"
+          onChange={handleChange}
+          type="tel"
+        />
+      ),
+    });
+
+    const label = screen.getByLabelText('label');
+    const input = screen.getByLabelText('input');
+
+    expect(label).toHaveTextContent('test');
+    expect(input).toHaveAttribute('type', 'tel');
+  });
+
   it('should be written to the input', async () => {
     const handleChange = vi.fn();
 
@@ -161,5 +182,49 @@ describe('<Input />', () => {
       'class',
       'blur_label',
     );
+  });
+
+  it('should form the phone number', async () => {
+    const handleChange = vi.fn();
+
+    renderTheme({
+      children: (
+        <Input
+          clear={false}
+          label_name="test"
+          onChange={handleChange}
+          type="tel"
+        />
+      ),
+    });
+
+    const input = screen.getByLabelText('input') as any;
+
+    await userEvent.type(input, '86981320524');
+
+    expect(input.value).toBe('(86) 98132-0524');
+  });
+
+  it('should form the phone number with backspace', async () => {
+    const handleChange = vi.fn();
+
+    renderTheme({
+      children: (
+        <Input
+          clear={false}
+          label_name="test"
+          onChange={handleChange}
+          type="tel"
+        />
+      ),
+    });
+
+    const input = screen.getByLabelText('input') as any;
+
+    await userEvent.type(input, '86981320524');
+
+    expect(input.value).toBe('(86) 98132-0524');
+
+    await userEvent.type(input, '{backspace}');
   });
 });
