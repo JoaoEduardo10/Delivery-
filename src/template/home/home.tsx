@@ -3,7 +3,7 @@ import React from 'react';
 import { Balls } from '../../components/balls';
 import { Button } from '../../components/button';
 import Image from 'next/image';
-import { Login } from '@/helpers/axios/login';
+import { Login } from '../../helpers/axios/login';
 
 export const TemplateHome = () => {
   const handleClick = async () => {
