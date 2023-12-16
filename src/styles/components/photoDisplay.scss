@@ -1,0 +1,35 @@
+.photo-display {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 5;
+  animation: show 0.5s ease-in-out;
+
+  .conteiner-image-display {
+    width: 95%;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .icon-close-display {
+    position: absolute;
+    top: 5%;
+    right: 5%;
+
+    svg {
+      color: $interativa_primiryColor;
+      font-size: 3rem;
+      cursor: pointer;
+    }
+  }
+}
