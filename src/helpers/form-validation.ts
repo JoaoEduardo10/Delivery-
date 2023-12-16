@@ -7,6 +7,9 @@ export interface FormValidationProps {
   cpf: string;
   number: string;
   token: string;
+  image: string | null;
+  latitude: string | null;
+  longitude: string | null;
 }
 
 const formValidation = async ({
@@ -14,6 +17,9 @@ const formValidation = async ({
   email,
   number,
   token,
+  image,
+  latitude,
+  longitude,
 }: FormValidationProps) => {
   if (!cpf) {
     return { error: true, message: 'Adicione um CPF ou CNPJ' };
@@ -45,6 +51,10 @@ const formValidation = async ({
 
   if (error && !data?.id && message) {
     return { error: true, message: message };
+  }
+
+  if (image === null || latitude === null || longitude === null) {
+    return { error: true, message: 'Tire uma foto' };
   }
 
   return { error: false, message: '' };
