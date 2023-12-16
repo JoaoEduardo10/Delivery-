@@ -6,6 +6,8 @@ import { formatCPF } from '@/helpers/formatCpf';
 import { CameraCapture } from '../CameraCapture';
 import { Checkbox } from '../Checkbox';
 import { Delivery } from '@/helpers/axios/delivery';
+import { Message, MessageProps } from '../message';
+import { Loading } from '../loading';
 
 export const Form = () => {
   const [cpfCnpj, setCpfCnpj] = useState('');
@@ -17,6 +19,27 @@ export const Form = () => {
   const [clearEmail, setClearEmail] = useState(false);
 
   const [showPhoto, setShowPhoto] = useState(false);
+
+  const [errorMessage, setErrorMesssage] = useState<MessageProps>({
+    type: 'error',
+    message: '',
+  });
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    let time: NodeJS.Timeout;
+
+    if (errorMessage.message) {
+      time = setTimeout(() => {
+        setErrorMesssage({
+          message: '',
+          type: 'error',
+        });
+      }, 3000);
+    }
+
+    return () => clearTimeout(time);
+  }, [errorMessage.message]);
 
   useEffect(() => {
     if (clearCpf_cnpj) {
@@ -34,6 +57,8 @@ export const Form = () => {
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    setLoading(true);
 
     const token = sessionStorage.getItem('$token');
     const deliveredByEmail = sessionStorage.getItem('$email');
@@ -60,7 +85,12 @@ export const Form = () => {
     });
 
     if (error) {
-      alert(message);
+      setLoading(false);
+      setErrorMesssage({
+        message,
+        type: 'error',
+      });
+
       return;
     }
 
@@ -81,6 +111,8 @@ export const Form = () => {
       token,
     });
 
+    setLoading(false);
+
     setClearCpf_cnpj(true);
     setClearEmail(true);
     setClearNumber(true);
@@ -90,13 +122,20 @@ export const Form = () => {
     sessionStorage.removeItem('$longitude');
     sessionStorage.removeItem('$someoneAtHome');
 
-    console.log('gravou o delivery');
+    setErrorMesssage({
+      message: 'Entrega gravada com sucesso',
+      type: 'sucess',
+    });
   };
 
   return (
     <form className="form" onSubmit={handleFormSubmit}>
+      {loading && <Loading />}
+      {errorMessage.message && (
+        <Message message={errorMessage.message} type={errorMessage.type} />
+      )}
       {showPhoto && <CameraCapture setShow={(show) => setShowPhoto(show)} />}
-      <h1>Adicnando Localização</h1>
+      <h1>Localização</h1>
       <div className="input">
         <Input
           clear={clearCpf_cnpj}
