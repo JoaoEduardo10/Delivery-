@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { FaWindowClose } from 'react-icons/fa';
 import { getLocation } from '../../helpers/getLatitudeAndLongitude';
 import { PhotoDisplay } from '../PhotoDisplay';
+import { Loading } from '../loading';
 
 interface LatitudeAndLongitudeProps {
   latitude: number;
@@ -22,6 +23,7 @@ export const CameraCapture = ({ setShow }: VideoComponetProps) => {
     });
   const videoRef = useRef<any>(null);
   const [showImageDisplay, setShowImageDisplay] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const capturePhoto = async () => {
     try {
@@ -57,7 +59,9 @@ export const CameraCapture = ({ setShow }: VideoComponetProps) => {
   };
 
   const handleTakeAndSavePhoto = async () => {
+    setLoading(true);
     await capturePhoto();
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -86,6 +90,7 @@ export const CameraCapture = ({ setShow }: VideoComponetProps) => {
 
   return (
     <>
+      {loading && <Loading />}
       {showImageDisplay && (
         <PhotoDisplay
           setShow={() => setShowImageDisplay(false)}
