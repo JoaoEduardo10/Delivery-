@@ -1,0 +1,47 @@
+.form {
+  background-color: $white;
+  width: 90%;
+  margin: 2rem auto;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1 {
+    margin: 3rem 0;
+
+    @media (max-width: 550px) {
+      font-size: 2rem;
+    }
+  }
+
+  .input {
+    width: 70%;
+
+    padding: 3rem 0;
+  }
+
+  @media (max-width: 550px) {
+    height: 84%;
+  }
+
+  .conteiner-button {
+    display: flex;
+    gap: 1.6rem;
+
+    button {
+      padding: 1rem;
+      background-color: $blue;
+      color: $white;
+      border: none;
+      transition: all 300ms ease-in-out;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: $interativa_primiryColor;
+      color: $white;
+      border: 0.1rem solid transparent;
+    }
+  }
+}
