@@ -1,17 +1,21 @@
-import { formatPhoneNumber } from '../../helpers/formatPhoneNumber.ts/index.js';
+import { formatPhoneNumber } from '../../helpers/formatPhoneNumber';
 import React, { useEffect, useState } from 'react';
-import { v1 as uuid } from 'uuid';
-
-const id = uuid();
 
 export interface InputProps {
   type: 'text' | 'email' | 'tel';
   label_name: string;
   onChange: (value: string) => void;
   clear: boolean;
+  id: string;
 }
 
-export const Input = ({ type, label_name, onChange, clear }: InputProps) => {
+export const Input = ({
+  type,
+  label_name,
+  onChange,
+  clear,
+  id,
+}: InputProps) => {
   const [value, setValue] = useState('');
   const [focus, setFocus] = useState(false);
   const [actualKey, setActualKey] = useState('');
