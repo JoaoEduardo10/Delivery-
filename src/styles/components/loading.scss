@@ -1,0 +1,14 @@
+.loaging-componet {
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 10;
+
+  .loading {
+    transform: translateY(-50%);
+  }
+}
