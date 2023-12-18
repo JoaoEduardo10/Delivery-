@@ -50,7 +50,7 @@ export async function POST(req: Request) {
 
   if (!data_ixc.registros) {
     return NextResponse.json(
-      { error: 'usuário invalido' + `${data_ixc}` },
+      { error: 'usuário invalido' + JSON.stringify(data_ixc) },
       {
         status: 404,
       },
