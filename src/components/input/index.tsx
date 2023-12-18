@@ -2,7 +2,7 @@ import { formatPhoneNumber } from '../../helpers/formatPhoneNumber';
 import React, { useEffect, useState } from 'react';
 
 export interface InputProps {
-  type: 'text' | 'email' | 'tel';
+  type: 'text' | 'email' | 'tel' | 'number';
   label_name: string;
   onChange: (value: string) => void;
   clear: boolean;

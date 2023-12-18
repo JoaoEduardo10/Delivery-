@@ -2,7 +2,7 @@
   background-color: $white;
   width: 90%;
   margin: 2rem auto;
-  height: 90%;
+  height: 99%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,7 +18,7 @@
   .input {
     width: 70%;
 
-    padding: 3rem 0;
+    padding: 2rem 0;
   }
 
   @media (max-width: 550px) {

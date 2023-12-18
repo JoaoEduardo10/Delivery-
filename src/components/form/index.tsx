@@ -13,10 +13,12 @@ export const Form = () => {
   const [cpfCnpj, setCpfCnpj] = useState('');
   const [number, setNumber] = useState('');
   const [email, setEmail] = useState('');
+  const [boletus_id, setBoletus_id] = useState(0);
 
   const [clearCpf_cnpj, setClearCpf_cnpj] = useState(false);
   const [clearNumber, setClearNumber] = useState(false);
   const [clearEmail, setClearEmail] = useState(false);
+  const [clearBoletus, setClearBoletus] = useState(false);
 
   const [showPhoto, setShowPhoto] = useState(false);
 
@@ -53,7 +55,11 @@ export const Form = () => {
     if (clearNumber) {
       setClearNumber(false);
     }
-  }, [clearCpf_cnpj, clearEmail, clearNumber]);
+
+    if (clearBoletus) {
+      setClearBoletus(false);
+    }
+  }, [clearCpf_cnpj, clearEmail, clearNumber, clearBoletus]);
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -82,6 +88,7 @@ export const Form = () => {
       image,
       latitude,
       longitude,
+      boletus_id,
     });
 
     if (error) {
@@ -103,6 +110,7 @@ export const Form = () => {
         longitude: Number(longitude),
         recipient: {
           cpf_cnpj: formatCPF(cpfCnpj),
+          boletus_id,
           email,
           number,
           someoneAtHome: Boolean(someoneAtHome) ?? false,
@@ -116,6 +124,7 @@ export const Form = () => {
     setClearCpf_cnpj(true);
     setClearEmail(true);
     setClearNumber(true);
+    setClearBoletus(true);
 
     sessionStorage.removeItem('$image');
     sessionStorage.removeItem('$latitude');
@@ -143,6 +152,16 @@ export const Form = () => {
           onChange={(value) => setCpfCnpj(value)}
           type="text"
           id="1"
+        />
+      </div>
+
+      <div className="input">
+        <Input
+          clear={clearCpf_cnpj}
+          label_name="Boleto (Obrigatório)"
+          onChange={(value) => setBoletus_id(Number(value))}
+          type="number"
+          id="7"
         />
       </div>
 

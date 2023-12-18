@@ -10,6 +10,7 @@ export interface FormValidationProps {
   image: string | null;
   latitude: string | null;
   longitude: string | null;
+  boletus_id: number;
 }
 
 const formValidation = async ({
@@ -20,9 +21,14 @@ const formValidation = async ({
   image,
   latitude,
   longitude,
+  boletus_id,
 }: FormValidationProps) => {
   if (!cpf) {
     return { error: true, message: 'Adicione um CPF ou CNPJ' };
+  }
+
+  if (!boletus_id) {
+    return { error: true, message: 'Adicione o boleto' };
   }
 
   if (number) {
