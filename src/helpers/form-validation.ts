@@ -17,7 +17,6 @@ const formValidation = async ({
   cpf,
   email,
   number,
-  token,
   image,
   latitude,
   longitude,
@@ -52,7 +51,6 @@ const formValidation = async ({
 
   const { error, data, message } = await Delivery.validateCpf({
     cpf_cpnj: cpf,
-    token,
   });
 
   if (error && !data?.id && message) {
