@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import '../styles/index.scss';
 
 export const metadata: Metadata = {
+  manifest: '/manifest.json',
   title: 'interativa-delivery',
   description: 'registrador de entregas da interativa',
 };
@@ -15,6 +16,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br" className="global">
       <head>
+        <meta name="theme-color" content="#fff" />
         <link
           href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
           rel="stylesheet"

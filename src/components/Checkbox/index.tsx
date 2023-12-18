@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 
 export const Checkbox = () => {
   const [isChecked, setChecked] = useState(false);
-  const someoneAtHome = sessionStorage.getItem('$someoneAtHome');
+  const someoneAtHome =
+    typeof window !== 'undefined'
+      ? sessionStorage.getItem('$someoneAtHome')
+      : null;
 
   const handleCheckboxChange = () => {
     setChecked(!isChecked);

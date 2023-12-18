@@ -1,0 +1,23 @@
+{
+  "name": "Interativa Delivery PWA App",
+  "short_name": "Interativa Telecom",
+  "icons": [
+    {
+      "src": "/icon-mobile.svg",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/next.svg",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "theme_color": "#FFFFFF",
+  "background_color": "#e7411b",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
+}

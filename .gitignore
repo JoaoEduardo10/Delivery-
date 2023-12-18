@@ -8,6 +8,11 @@
 
 .env
 
+sw.js
+sw.js*
+swe*
+workbox*
+
 # testing
 /coverage
 
