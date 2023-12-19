@@ -8,7 +8,6 @@ import { Checkbox } from '../Checkbox';
 import { Delivery } from '@/helpers/axios/delivery';
 import { Message, MessageProps } from '../message';
 import { Loading } from '../loading';
-import { Login } from '@/helpers/axios/login';
 
 export const Form = () => {
   const [cpfCnpj, setCpfCnpj] = useState('');
@@ -139,23 +138,8 @@ export const Form = () => {
     });
   };
 
-  const handleSignOut = () => {
-    const id = sessionStorage.getItem('$id');
-
-    if (id) {
-      Login.signOut(id);
-      return;
-    }
-    window.location.href = '/';
-  };
-
   return (
     <form className="form" onSubmit={handleFormSubmit}>
-      <div className="conteiner-button-close">
-        <button onClick={handleSignOut} type="button">
-          Sair
-        </button>
-      </div>
       {loading && <Loading />}
       {errorMessage.message && (
         <Message message={errorMessage.message} type={errorMessage.type} />
