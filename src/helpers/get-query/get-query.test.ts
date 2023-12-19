@@ -6,10 +6,11 @@ interface SetUrlProps {
   token?: string;
   email?: string;
   username?: string;
+  id?: string;
 }
 
-const setUrl = ({ email, username, token }: SetUrlProps) => {
-  const new_url = `http://localhost:3000/user?username=${username}&token=${token}&email=${email}`;
+const setUrl = ({ email, username, token, id }: SetUrlProps) => {
+  const new_url = `http://localhost:3000/user?id=${id}&username=${username}&token=${token}&email=${email}`;
 
   Object.defineProperty(window, 'location', {
     value: {
@@ -61,6 +62,14 @@ describe('get-query', () => {
 
   it('should returns an null for not adding the user email', () => {
     setUrl({ ...user, email: '' } as SetUrlProps);
+
+    const query = parseQueryString();
+
+    expect(query).toBe(null);
+  });
+
+  it('should returns an null for not adding the user id', () => {
+    setUrl({ ...user, id: '' } as SetUrlProps);
 
     const query = parseQueryString();
 
