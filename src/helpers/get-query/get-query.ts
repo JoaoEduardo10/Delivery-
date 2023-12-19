@@ -17,6 +17,7 @@ const parseQueryString = () => {
     token: '',
     email: '',
     username: '',
+    id: '',
   };
 
   queryParameters.forEach((parameter) => {
@@ -33,9 +34,13 @@ const parseQueryString = () => {
     if (key === 'email') {
       user.email = value;
     }
+
+    if (key === 'id') {
+      user.id = value;
+    }
   });
 
-  if (!user.email || !user.username || !user.token) {
+  if (!user.email || !user.username || !user.token || !user.id) {
     return null;
   }
 

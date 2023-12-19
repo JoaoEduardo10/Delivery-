@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br" className="global">
       <head>
-        <meta name="theme-color" content="#fff" />
+        <meta name="theme-color" content="#0c192c" />
         <link
           href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
           rel="stylesheet"

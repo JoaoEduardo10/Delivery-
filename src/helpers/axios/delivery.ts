@@ -59,15 +59,24 @@ class Delivery {
     }
   }
 
-  static async validateCpf({ cpf_cpnj }: { cpf_cpnj: string }) {
+  static async validateCpf({
+    cpf_cpnj,
+    token,
+  }: {
+    cpf_cpnj: string;
+    token: string;
+  }) {
     try {
-      const response = await fetch('/api', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_DELIVERY_API}/delivery?cpf_cnpj=${cpf_cpnj}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `${process.env.NEXT_PUBLIC_TYPE_AUTHORIZATION} ${token}`,
+          },
         },
-        body: JSON.stringify({ cpf: cpf_cpnj }),
-      });
+      );
 
       const data: DeliveryReponsesData['validateCpf'] = await response.json();
 

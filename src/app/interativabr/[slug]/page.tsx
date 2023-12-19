@@ -28,6 +28,6 @@ export default async function Interativa({
   const { email, name, token } = await UserValidation.validate({ id: slug });
 
   redirect(
-    `/interativabr/usuario?username=${name}&email=${email}&token=${token}`,
+    `/interativabr/usuario?id=${slug}&username=${name}&email=${email}&token=${token}`,
   );
 }

@@ -15,6 +15,7 @@ export const TemplateUser = () => {
     sessionStorage.setItem('$token', user.token);
     sessionStorage.setItem('$username', user.username);
     sessionStorage.setItem('$email', user.email);
+    sessionStorage.setItem('$id', user.id);
   }, []);
 
   return <Form />;

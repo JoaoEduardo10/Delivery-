@@ -21,6 +21,7 @@ const formValidation = async ({
   latitude,
   longitude,
   boletus_id,
+  token,
 }: FormValidationProps) => {
   if (!cpf) {
     return { error: true, message: 'Adicione um CPF ou CNPJ' };
@@ -51,6 +52,7 @@ const formValidation = async ({
 
   const { error, data, message } = await Delivery.validateCpf({
     cpf_cpnj: cpf,
+    token,
   });
 
   if (error && !data?.id && message) {
