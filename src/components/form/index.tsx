@@ -8,6 +8,7 @@ import { Checkbox } from '../Checkbox';
 import { Delivery } from '@/helpers/axios/delivery';
 import { Message, MessageProps } from '../message';
 import { Loading } from '../loading';
+import { SessionValidate } from '@/helpers/session-validate';
 
 export const Form = () => {
   const [cpfCnpj, setCpfCnpj] = useState('');
@@ -26,6 +27,7 @@ export const Form = () => {
     type: 'error',
     message: '',
   });
+  const [sessionRedirect, setRedirect] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -37,11 +39,16 @@ export const Form = () => {
           message: '',
           type: 'error',
         });
+
+        if (sessionRedirect) {
+          setRedirect(false);
+          window.location.href = '/';
+        }
       }, 3000);
     }
 
     return () => clearTimeout(time);
-  }, [errorMessage.message]);
+  }, [errorMessage.message, sessionRedirect]);
 
   useEffect(() => {
     if (clearCpf_cnpj) {
@@ -70,9 +77,23 @@ export const Form = () => {
     const deliveredByEmail = sessionStorage.getItem('$email');
     const deliveredByName = sessionStorage.getItem('$username');
     const id = sessionStorage.getItem('$id');
+    const isDate = sessionStorage.getItem('$date');
 
     if (!token || !deliveredByEmail || !deliveredByName || !id) {
       window.location.href = '/';
+      return;
+    }
+
+    const { error: sessionError, message: messageSession } =
+      SessionValidate.validateDate({ isData: isDate });
+
+    if (sessionError) {
+      setLoading(false);
+      setRedirect(true);
+      setErrorMesssage({
+        message: messageSession,
+        type: 'error',
+      });
       return;
     }
 
