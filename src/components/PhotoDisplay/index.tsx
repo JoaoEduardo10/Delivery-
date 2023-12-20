@@ -9,7 +9,7 @@ export interface PhotoDisplayProps {
 
 export const PhotoDisplay = ({ image, setShow }: PhotoDisplayProps) => {
   return (
-    <section className="photo-display">
+    <section className="photo-display" aria-label="photo-display">
       <div
         aria-label="icons-imageDisplay-close"
         onClick={() => setShow(false)}

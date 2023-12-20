@@ -1,92 +1,87 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef, useState } from 'react';
 import { FaWindowClose } from 'react-icons/fa';
-import { getLocation } from '../../helpers/getLatitudeAndLongitude';
 import { PhotoDisplay } from '../PhotoDisplay';
 import { Loading } from '../loading';
-
-interface LatitudeAndLongitudeProps {
-  latitude: number;
-  longitude: number;
-}
+import { Message, MessageProps } from '../message';
+import { CapturePhoto } from './capturePhoto';
+import { StartCapture } from './startCapture';
+import { LatitudeAndLongitudeProps, SessionManager } from './sessionManager';
 
 export interface VideoComponetProps {
   setShow: (show: boolean) => void;
 }
 
 export const CameraCapture = ({ setShow }: VideoComponetProps) => {
+  const videoRef = useRef<any>(null);
   const [image, setImage] = useState('');
+  const [showImageDisplay, setShowImageDisplay] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMesssage] = useState<MessageProps>({
+    type: 'error',
+    message: '',
+  });
   const [latitudeAndLongitude, setLatitudeAndLongitude] =
     useState<LatitudeAndLongitudeProps>({
       latitude: 0,
       longitude: 0,
     });
-  const videoRef = useRef<any>(null);
-  const [showImageDisplay, setShowImageDisplay] = useState(false);
-  const [loading, setLoading] = useState(false);
 
-  const capturePhoto = async () => {
+  const handleTakeAndSavePhoto = async () => {
     try {
-      const video = videoRef.current;
+      setLoading(true);
 
-      const canvas = document.createElement('canvas');
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      const context = canvas.getContext('2d') as any;
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-      const fotoDataURL = canvas.toDataURL('image/jpeg');
-
-      const { latitude, longitude } = await getLocation();
+      const { fotoDataURL, latitude, longitude } = await CapturePhoto.get({
+        videoRef,
+      });
 
       setImage(fotoDataURL);
       setLatitudeAndLongitude({ latitude, longitude });
+      setLoading(false);
     } catch (error: any) {
-      console.error('Erro ao obter localização:', error.message);
+      setLoading(false);
+      setErrorMesssage({ message: error.message, type: 'error' });
     }
-  };
-
-  const startCapture = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: 'environment' },
-      });
-      videoRef.current.srcObject = stream;
-      videoRef.current.play();
-    } catch (error: any) {
-      alert(`Não foi possivel abre a camera: ${error.message}`);
-    }
-  };
-
-  const handleTakeAndSavePhoto = async () => {
-    setLoading(true);
-    await capturePhoto();
-    setLoading(false);
   };
 
   useEffect(() => {
-    startCapture();
+    const start = async () => {
+      const { error, message } = await StartCapture.start({ videoRef });
+
+      if (error) {
+        setErrorMesssage({
+          message,
+          type: 'error',
+        });
+      }
+    };
+
+    start();
   }, []);
 
   useEffect(() => {
-    if (
-      image &&
-      latitudeAndLongitude.latitude != 0 &&
-      latitudeAndLongitude.longitude != 0
-    ) {
-      sessionStorage.setItem('$image', image);
-      sessionStorage.setItem(
-        '$latitude',
-        latitudeAndLongitude.latitude.toString(),
-      );
-      sessionStorage.setItem(
-        '$longitude',
-        latitudeAndLongitude.longitude.toString(),
-      );
+    let time: NodeJS.Timeout;
 
+    const { success } = SessionManager.setSessionData({
+      image,
+      latitudeAndLongitude,
+    });
+
+    if (success) {
       setShowImageDisplay(true);
     }
-  }, [image, latitudeAndLongitude]);
+
+    if (errorMessage.message) {
+      time = setTimeout(() => {
+        setErrorMesssage({
+          message: '',
+          type: 'error',
+        });
+      }, 3000);
+    }
+
+    return () => clearTimeout(time);
+  }, [image, latitudeAndLongitude, errorMessage.message]);
 
   return (
     <>
@@ -96,6 +91,9 @@ export const CameraCapture = ({ setShow }: VideoComponetProps) => {
           setShow={() => setShowImageDisplay(false)}
           image={image}
         />
+      )}
+      {errorMessage.message && (
+        <Message message={errorMessage.message} type={errorMessage.type} />
       )}
       <section className="video-component">
         <div
