@@ -53,6 +53,8 @@ export const CameraCapture = ({ setShow }: VideoComponetProps) => {
           message,
           type: 'error',
         });
+
+        setShow(false);
       }
     };
 
