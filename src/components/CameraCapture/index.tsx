@@ -94,7 +94,7 @@ export const CameraCapture = ({ setShow }: VideoComponetProps) => {
           image={image}
         />
       )}
-      <section className="video-component">
+      <section aria-label="camera" className="video-component">
         {errorMessage.message && (
           <Message message={errorMessage.message} type={errorMessage.type} />
         )}

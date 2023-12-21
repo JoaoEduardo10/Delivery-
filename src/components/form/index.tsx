@@ -1,14 +1,18 @@
+/* eslint-disable prefer-const */
 import React, { useEffect, useState } from 'react';
 import { Input } from '../input';
-import { formValidation } from '@/helpers/form-validation';
-import { formatPhoneNumber } from '@/helpers/formatPhoneNumber';
-import { formatCPF } from '@/helpers/formatCpf';
+import { FormValidation } from './form-validation';
+import { formatPhoneNumber } from '../../helpers/formatPhoneNumber';
+import { formatCPF } from '../../helpers/formatCpf';
 import { CameraCapture } from '../CameraCapture';
 import { Checkbox } from '../Checkbox';
-import { Delivery } from '@/helpers/axios/delivery';
+import { Delivery } from '../../helpers/axios/delivery';
 import { Message, MessageProps } from '../message';
 import { Loading } from '../loading';
-import { SessionValidate } from '@/helpers/session-validate';
+import { SessionValidate } from '../../helpers/session-validate';
+import { SessionStorageValues } from './sessionStorageValues';
+import { RestoresErrorMessage } from './restoresErrorMessage';
+import { ClearStates } from './clearStates';
 
 export const Form = () => {
   const [cpfCnpj, setCpfCnpj] = useState('');
@@ -31,56 +35,58 @@ export const Form = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    let time: NodeJS.Timeout;
+    let time: NodeJS.Timeout = setTimeout(() => {}, 3000);
 
-    if (errorMessage.message) {
-      time = setTimeout(() => {
-        setErrorMesssage({
-          message: '',
-          type: 'error',
-        });
+    RestoresErrorMessage.restore({
+      message: errorMessage.message,
+      sessionRedirect,
+      setErrorMesssage,
+      setRedirect,
+      time: time,
+    });
 
-        if (sessionRedirect) {
-          setRedirect(false);
-          window.location.href = '/';
-        }
-      }, 3000);
-    }
+    ClearStates.clear({
+      clearBoletus,
+      clearCpfCnpj: clearCpf_cnpj,
+      clearEmail,
+      clearNumber,
+      setClearBoletus,
+      setClearCpfCnpj: setClearCpf_cnpj,
+      setClearEmail,
+      setClearNumber,
+    });
 
     return () => clearTimeout(time);
-  }, [errorMessage.message, sessionRedirect]);
-
-  useEffect(() => {
-    if (clearCpf_cnpj) {
-      setClearCpf_cnpj(false);
-    }
-
-    if (clearEmail) {
-      setClearEmail(false);
-    }
-
-    if (clearNumber) {
-      setClearNumber(false);
-    }
-
-    if (clearBoletus) {
-      setClearBoletus(false);
-    }
-  }, [clearCpf_cnpj, clearEmail, clearNumber, clearBoletus]);
+  }, [
+    errorMessage.message,
+    sessionRedirect,
+    clearCpf_cnpj,
+    clearEmail,
+    clearNumber,
+    clearBoletus,
+  ]);
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     setLoading(true);
 
-    const token = sessionStorage.getItem('$token');
-    const deliveredByEmail = sessionStorage.getItem('$email');
-    const deliveredByName = sessionStorage.getItem('$username');
-    const id = sessionStorage.getItem('$id');
-    const isDate = sessionStorage.getItem('$date');
+    const {
+      error: errorSessionValid,
+      data: {
+        deliveredByEmail,
+        deliveredByName,
+        isDate,
+        token,
+        image,
+        latitude,
+        longitude,
+        someoneAtHome,
+      },
+    } = SessionStorageValues.get();
 
-    if (!token || !deliveredByEmail || !deliveredByName || !id) {
-      window.location.href = '/';
+    if (errorSessionValid) {
+      SessionStorageValues.redirect();
       return;
     }
 
@@ -97,12 +103,7 @@ export const Form = () => {
       return;
     }
 
-    const image = sessionStorage.getItem('$image');
-    const latitude = sessionStorage.getItem('$latitude');
-    const longitude = sessionStorage.getItem('$longitude');
-    const someoneAtHome = sessionStorage.getItem('$someoneAtHome');
-
-    const { error, message } = await formValidation({
+    const { error, message } = await FormValidation.validate({
       cpf: formatCPF(cpfCnpj),
       email,
       number,
@@ -123,23 +124,34 @@ export const Form = () => {
       return;
     }
 
-    await Delivery.create_delivery({
-      params: {
-        deliveredByEmail,
-        deliveredByName,
-        imageReference: image!,
-        latitude: Number(latitude),
-        longitude: Number(longitude),
-        recipient: {
-          cpf_cnpj: formatCPF(cpfCnpj),
-          boletus_id,
-          email,
-          number,
-          someoneAtHome: Boolean(someoneAtHome) ?? false,
+    const { error: errorDeliveryCreated, message: deliveryMessage } =
+      await Delivery.create_delivery({
+        params: {
+          deliveredByEmail,
+          deliveredByName,
+          imageReference: image!,
+          latitude: Number(latitude),
+          longitude: Number(longitude),
+          recipient: {
+            cpf_cnpj: formatCPF(cpfCnpj),
+            boletus_id,
+            email,
+            number,
+            someoneAtHome: Boolean(someoneAtHome) ?? false,
+          },
         },
-      },
-      token,
-    });
+        token,
+      });
+
+    if (errorDeliveryCreated) {
+      setLoading(false);
+      setErrorMesssage({
+        message: deliveryMessage,
+        type: 'error',
+      });
+
+      return;
+    }
 
     setLoading(false);
 
