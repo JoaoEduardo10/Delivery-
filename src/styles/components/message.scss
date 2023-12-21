@@ -12,6 +12,7 @@
   text-transform: uppercase;
   font-weight: bold;
   animation: show 0.5s ease-in-out;
+  z-index: 10;
 
   @keyframes show {
     0% {

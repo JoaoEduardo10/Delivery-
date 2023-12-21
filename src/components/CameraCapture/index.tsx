@@ -92,10 +92,10 @@ export const CameraCapture = ({ setShow }: VideoComponetProps) => {
           image={image}
         />
       )}
-      {errorMessage.message && (
-        <Message message={errorMessage.message} type={errorMessage.type} />
-      )}
       <section className="video-component">
+        {errorMessage.message && (
+          <Message message={errorMessage.message} type={errorMessage.type} />
+        )}
         <div
           aria-label="icon-close-camera"
           onClick={() => setShow(false)}

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
+let someoneAtHome = false;
+
 export const Checkbox = () => {
   const [isChecked, setChecked] = useState(false);
-  const someoneAtHome =
-    typeof window !== 'undefined'
-      ? sessionStorage.getItem('$someoneAtHome')
-      : null;
 
   const handleCheckboxChange = () => {
+    someoneAtHome = true;
     setChecked(!isChecked);
   };
 
@@ -15,11 +14,9 @@ export const Checkbox = () => {
     if (!someoneAtHome) {
       setChecked(false);
     }
-  }, [someoneAtHome]);
 
-  useEffect(() => {
     sessionStorage.setItem('$someoneAtHome', `${isChecked}`);
-  }, [isChecked]);
+  }, [someoneAtHome, isChecked]);
 
   return (
     <div className="conteiner-checkbox">
@@ -28,8 +25,11 @@ export const Checkbox = () => {
         type="checkbox"
         checked={isChecked}
         onChange={handleCheckboxChange}
+        aria-label="input checkbox"
       />
-      <label htmlFor="6">Tem alguém em casa?</label>
+      <label htmlFor="6" aria-label="label checkbox">
+        Tem alguém em casa?
+      </label>
     </div>
   );
 };
