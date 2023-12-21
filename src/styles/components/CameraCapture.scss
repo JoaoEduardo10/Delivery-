@@ -13,7 +13,9 @@
   animation: show 0.5s ease-in-out;
 
   .message {
-    top: 0;
+    position: fixed;
+    top: 10%;
+    right: 40%;
   }
 
   @keyframes show {
