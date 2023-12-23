@@ -6,6 +6,8 @@ import React, { useEffect } from 'react';
 
 export const TemplateUser = () => {
   useEffect(() => {
+    sessionStorage.clear();
+
     const user = parseQueryString();
 
     if (!user?.email || !user.token || !user?.username) {
