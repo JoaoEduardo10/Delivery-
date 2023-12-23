@@ -87,6 +87,11 @@ export const Form = () => {
       },
     } = SessionStorageValues.get();
 
+    if (!id) {
+      SessionStorageValues.redirect();
+      return;
+    }
+
     if (errorSessionValid) {
       Login.signOut(id);
       return;
