@@ -13,6 +13,7 @@ import { SessionValidate } from '../../helpers/session-validate';
 import { SessionStorageValues } from './sessionStorageValues';
 import { RestoresErrorMessage } from './restoresErrorMessage';
 import { ClearStates } from './clearStates';
+import { Login } from '@/helpers/axios/login';
 
 export const Form = () => {
   const [cpfCnpj, setCpfCnpj] = useState('');
@@ -82,11 +83,12 @@ export const Form = () => {
         latitude,
         longitude,
         someoneAtHome,
+        id,
       },
     } = SessionStorageValues.get();
 
     if (errorSessionValid) {
-      SessionStorageValues.redirect();
+      Login.signOut(id);
       return;
     }
 
