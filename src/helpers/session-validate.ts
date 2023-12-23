@@ -8,7 +8,7 @@ class SessionValidate {
 
     const data = new Date(Number(isData)).getTime();
 
-    if (Date.now() - data > 81400000) {
+    if (Date.now() - data > 71400000) {
       return {
         error: true,
         message: 'Token inspirado, você será redirecionado!',

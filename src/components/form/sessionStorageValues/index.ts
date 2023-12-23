@@ -4,13 +4,13 @@ class SessionStorageValues {
     const deliveredByEmail = sessionStorage.getItem('$email');
     const deliveredByName = sessionStorage.getItem('$username');
     const id = sessionStorage.getItem('$id');
-    const isDate = sessionStorage.getItem('$date');
+    const isDate = localStorage.getItem('$date');
     const image = sessionStorage.getItem('$image');
     const latitude = sessionStorage.getItem('$latitude');
     const longitude = sessionStorage.getItem('$longitude');
     const someoneAtHome = sessionStorage.getItem('$someoneAtHome');
 
-    if (!token || !deliveredByEmail || !deliveredByName || !id) {
+    if (!token || !deliveredByEmail || !deliveredByName) {
       return {
         error: true,
         data: {

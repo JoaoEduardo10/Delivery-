@@ -34,6 +34,7 @@ export const Form = () => {
   });
   const [sessionRedirect, setRedirect] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [validateId, setValidateId] = useState('');
 
   useEffect(() => {
     let time: NodeJS.Timeout = setTimeout(() => {}, 3000);
@@ -44,6 +45,7 @@ export const Form = () => {
       setErrorMesssage,
       setRedirect,
       time: time,
+      id: validateId,
     });
 
     ClearStates.clear({
@@ -91,6 +93,8 @@ export const Form = () => {
       SessionStorageValues.redirect();
       return;
     }
+
+    setValidateId(id);
 
     if (errorSessionValid) {
       Login.signOut(id);

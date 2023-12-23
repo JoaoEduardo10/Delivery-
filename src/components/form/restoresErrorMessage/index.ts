@@ -1,3 +1,4 @@
+import { Login } from '../../../helpers/axios/login';
 import { MessageProps } from '../../message';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -8,6 +9,7 @@ export interface RestoresErrorMessageProps {
     sessionRedirect: boolean;
     setErrorMesssage: (value: React.SetStateAction<MessageProps>) => void;
     setRedirect: (value: React.SetStateAction<boolean>) => void;
+    id: string;
   };
 }
 
@@ -18,6 +20,7 @@ class RestoresErrorMessage {
     setErrorMesssage,
     sessionRedirect,
     setRedirect,
+    id,
   }: RestoresErrorMessageProps['restore']) {
     if (message) {
       time = setTimeout(() => {
@@ -28,7 +31,7 @@ class RestoresErrorMessage {
 
         if (sessionRedirect) {
           setRedirect(false);
-          window.location.href = '/';
+          Login.signOut(id);
         }
       }, 3000);
     }
