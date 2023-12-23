@@ -9,6 +9,8 @@ export const TemplateUser = () => {
     const user = parseQueryString();
 
     if (!user?.email || !user.token || !user?.username) {
+      sessionStorage.clear();
+      localStorage.clear();
       redirect('/');
     }
 
@@ -16,7 +18,10 @@ export const TemplateUser = () => {
     sessionStorage.setItem('$username', user.username);
     sessionStorage.setItem('$email', user.email);
     sessionStorage.setItem('$id', user.id);
-    localStorage.setItem('$date', `${Date.now()}`);
+
+    if (!localStorage.getItem('$date')) {
+      localStorage.setItem('$date', `${Date.now()}`);
+    }
   }, []);
 
   return <Form />;

@@ -90,6 +90,8 @@ export const Form = () => {
     } = SessionStorageValues.get();
 
     if (!id) {
+      sessionStorage.clear();
+      localStorage.clear();
       SessionStorageValues.redirect();
       return;
     }
@@ -97,6 +99,8 @@ export const Form = () => {
     setValidateId(id);
 
     if (errorSessionValid) {
+      sessionStorage.clear();
+      localStorage.clear();
       Login.signOut(id);
       return;
     }

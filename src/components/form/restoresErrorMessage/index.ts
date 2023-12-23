@@ -30,6 +30,8 @@ class RestoresErrorMessage {
         });
 
         if (sessionRedirect) {
+          sessionStorage.clear();
+          localStorage.clear();
           setRedirect(false);
           Login.signOut(id);
         }
