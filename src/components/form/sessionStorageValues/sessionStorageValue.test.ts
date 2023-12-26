@@ -7,7 +7,7 @@ describe('SessionStorageValues', () => {
     sessionStorage.setItem('$email', 'test@interativabr.com.br');
     sessionStorage.setItem('$username', 'test');
     sessionStorage.setItem('$id', '74342594020r');
-    sessionStorage.setItem('$date', `${Date.now()}`);
+    localStorage.setItem('$date', `${Date.now()}`);
     sessionStorage.setItem('$image', 'logo.png');
     sessionStorage.setItem('$latitude', '53965235543');
     sessionStorage.setItem('$longitude', '234656');
@@ -16,6 +16,7 @@ describe('SessionStorageValues', () => {
 
   afterEach(() => {
     sessionStorage.clear();
+    localStorage.clear();
   });
 
   it('should return all storagesValue', () => {

@@ -13,7 +13,7 @@ import { SessionValidate } from '../../helpers/session-validate';
 import { SessionStorageValues } from './sessionStorageValues';
 import { RestoresErrorMessage } from './restoresErrorMessage';
 import { ClearStates } from './clearStates';
-import { Login } from '@/helpers/axios/login';
+import { Login } from '../../helpers/axios/login';
 
 export const Form = () => {
   const [cpfCnpj, setCpfCnpj] = useState('');
@@ -105,10 +105,10 @@ export const Form = () => {
       return;
     }
 
-    const { error: sessionError, message: messageSession } =
+    const { error: sessionExpired, message: messageSession } =
       SessionValidate.validateDate({ isData: isDate });
 
-    if (sessionError) {
+    if (sessionExpired) {
       setLoading(false);
       setRedirect(true);
       setErrorMesssage({
@@ -187,7 +187,7 @@ export const Form = () => {
   };
 
   return (
-    <form className="form" onSubmit={handleFormSubmit}>
+    <form role="form" className="form" onSubmit={handleFormSubmit}>
       {loading && <Loading />}
       {errorMessage.message && (
         <Message message={errorMessage.message} type={errorMessage.type} />
