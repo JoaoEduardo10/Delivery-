@@ -28,7 +28,7 @@ class Login {
   }
 
   static signOut(id: string) {
-    window.location.href = `${process.env.NEXT_PUBLIC_LOGIN_API_URL}/logout/${id}`;
+    window.location.href = `${process.env.NEXT_PUBLIC_LOGIN_API}/logout/${id}`;
   }
 
   static async get_all_ids() {

@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "/subscriptions/e7232b21-6bd8-4eb6-850a-451d89b62770/resourceGroups/appsvc_linux_centralus_basic/providers/Microsoft.Web/sites/carnes-entrega",
+  "appService.deploySubpath": "."
+}
