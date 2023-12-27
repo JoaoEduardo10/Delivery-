@@ -39,6 +39,7 @@ class Delivery {
         `${process.env.NEXT_PUBLIC_DELIVERY_API}/delivery`,
         {
           method: 'POST',
+          cache: 'no-cache',
           headers: {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
