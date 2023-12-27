@@ -122,7 +122,6 @@ export const Form = () => {
       cpf: formatCPF(cpfCnpj),
       email,
       number,
-      token,
       image,
       latitude,
       longitude,

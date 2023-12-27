@@ -5,7 +5,6 @@ export interface FormValidationProps {
   email: string;
   cpf: string;
   number: string;
-  token: string;
   image: string | null;
   latitude: string | null;
   longitude: string | null;
