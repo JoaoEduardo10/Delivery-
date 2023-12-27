@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DeliveryDTO } from '../../interfaces/delivery';
-import { Delivery_Api } from '../../libs/axios';
 
 interface CreateeliveryParams {
   params: {
@@ -36,18 +35,22 @@ export interface DeliveryReponsesData {
 class Delivery {
   static async create_delivery({ params, token }: CreateeliveryParams) {
     try {
-      const response = await Delivery_Api('/delivery', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `${process.env.NEXT_PUBLIC_TYPE_AUTHORIZATION} ${token}`,
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_DELIVERY_API}/delivery`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `${process.env.NEXT_PUBLIC_TYPE_AUTHORIZATION} ${token}`,
+          },
+          body: JSON.stringify({
+            ...params,
+          }),
         },
-        data: {
-          ...params,
-        },
-      });
+      );
 
-      const data: DeliveryReponsesData['create_delivery'] = await response.data;
+      const data: DeliveryReponsesData['create_delivery'] =
+        await response.json();
 
       if (data.error && !data.delivery?.id) {
         throw new Error(data.error);
