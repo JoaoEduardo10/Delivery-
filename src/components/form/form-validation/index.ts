@@ -1,5 +1,4 @@
 import validator from 'validator';
-import { Delivery } from '../../../helpers/axios/delivery';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface FormValidationProps {
@@ -22,7 +21,6 @@ class FormValidation {
     latitude,
     longitude,
     number,
-    token,
   }: FormValidationProps) {
     if (!cpf) {
       return { error: true, message: 'Adicione um CPF ou CNPJ' };
@@ -49,15 +47,6 @@ class FormValidation {
       if (!isEmail) {
         return { error: true, message: 'Fomato de email invalido!' };
       }
-    }
-
-    const { error, data, message } = await Delivery.validateCpf({
-      cpf_cpnj: cpf,
-      token,
-    });
-
-    if (error && !data?.id && message) {
-      return { error: true, message: message };
     }
 
     if (image === null || latitude === null || longitude === null) {
