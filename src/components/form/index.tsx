@@ -174,15 +174,15 @@ export const Form = () => {
     setClearNumber(true);
     setClearBoletus(true);
 
-    sessionStorage.removeItem('$image');
-    sessionStorage.removeItem('$latitude');
-    sessionStorage.removeItem('$longitude');
-    sessionStorage.removeItem('$someoneAtHome');
-
     setErrorMesssage({
       message: 'Entrega gravada com sucesso',
       type: 'sucess',
     });
+
+    sessionStorage.removeItem('$image');
+    sessionStorage.removeItem('$latitude');
+    sessionStorage.removeItem('$longitude');
+    sessionStorage.removeItem('$someoneAtHome');
   };
 
   return (
