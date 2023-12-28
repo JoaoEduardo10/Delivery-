@@ -13,7 +13,7 @@ export const TemplateUser = () => {
 
     if (!user?.email || !user.token || !user?.username) {
       sessionStorage.clear();
-      localStorage.clear();
+      localStorage.removeItem('$date');
       redirect('/');
     }
 

@@ -31,7 +31,7 @@ class RestoresErrorMessage {
 
         if (sessionRedirect) {
           sessionStorage.clear();
-          localStorage.clear();
+          localStorage.removeItem('$date');
           setRedirect(false);
           Login.signOut(id);
         }
