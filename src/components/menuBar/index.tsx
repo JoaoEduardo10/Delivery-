@@ -20,8 +20,14 @@ export const MenuBar = () => {
       setLoading(true);
       const { data, error, message } = AddClientsLocalStorage.getAll();
 
-      if (!data && error && message) {
+      if (data == null && error && message) {
         alert(message);
+        setLoading(false);
+        return;
+      }
+
+      if (data!.length <= 0) {
+        alert('Adicone pelo menos um clientes');
         setLoading(false);
         return;
       }
@@ -53,10 +59,15 @@ export const MenuBar = () => {
           alert(message);
           isDeliveryError = true;
 
-          if (message == 'cpf ou cnpj invalido!') {
+          if (
+            message == 'cpf ou cnpj invalido!' ||
+            message == 'Boleto já adicinado'
+          ) {
             AddClientsLocalStorage.removeClient(
               data![index].recipient.boletus_id,
             );
+            isDeliveryError = true;
+            break;
           }
 
           break;
