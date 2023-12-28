@@ -33,6 +33,22 @@ class AddClientsLocalStorage {
     }
   }
 
+  static removeClient(boletusId: number) {
+    const clientsStorage = localStorage.getItem('$clients');
+
+    if (clientsStorage == null) {
+      return;
+    }
+
+    const clients = JSON.parse(clientsStorage) as Omit<DeliveryDTO, 'id'>[];
+
+    const newClients = clients.filter((client) => {
+      return client.recipient.boletus_id !== boletusId;
+    });
+
+    localStorage.setItem('$clients', JSON.stringify(newClients));
+  }
+
   static getAll() {
     const clientsStorage = localStorage.getItem('$clients');
 

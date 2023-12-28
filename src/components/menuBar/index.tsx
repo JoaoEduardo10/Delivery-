@@ -43,6 +43,12 @@ export const MenuBar = () => {
           token,
         });
 
+        if (!error) {
+          AddClientsLocalStorage.removeClient(
+            data![index].recipient.boletus_id,
+          );
+        }
+
         if (error && message) {
           alert(message);
           isDeliveryError = true;
