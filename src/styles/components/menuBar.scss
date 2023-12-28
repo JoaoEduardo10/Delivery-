@@ -1,0 +1,66 @@
+.menuBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: $white;
+  width: 80%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1.6rem;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 14px 2px 26px -7px rgba(0, 0, 0, 0.75);
+  transition: all 300ms ease-in-out;
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  div {
+    width: 100%;
+
+    button {
+      width: 50%;
+      padding: 1rem 0;
+      background-color: $blue;
+      color: $white;
+      border: none;
+      transition: all 300ms ease-in-out;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: $white;
+      color: red;
+      border: 0.1rem solid $blue;
+    }
+  }
+
+  .icon {
+    position: absolute;
+    top: 50%;
+    right: 00%;
+    font-size: 9rem;
+    cursor: pointer;
+    width: 7%;
+  }
+}
+
+.menu-open {
+  top: 0;
+  left: 0;
+
+  .loaging-componet {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    z-index: 30;
+  }
+}
+
+.menu-close {
+  left: -80%;
+}

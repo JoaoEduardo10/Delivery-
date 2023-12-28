@@ -1,5 +1,6 @@
 'use client';
 import { Form } from '@/components/form';
+import { MenuBar } from '@/components/menuBar';
 import { parseQueryString } from '@/helpers/get-query/get-query';
 import { redirect } from 'next/navigation';
 import React, { useEffect } from 'react';
@@ -26,5 +27,10 @@ export const TemplateUser = () => {
     }
   }, []);
 
-  return <Form />;
+  return (
+    <>
+      <Form />
+      <MenuBar />
+    </>
+  );
 };

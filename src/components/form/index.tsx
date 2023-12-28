@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable prefer-const */
 import React, { useEffect, useState } from 'react';
 import { Input } from '../input';
@@ -6,7 +7,6 @@ import { formatPhoneNumber } from '../../helpers/formatPhoneNumber';
 import { formatCPF } from '../../helpers/formatCpf';
 import { CameraCapture } from '../CameraCapture';
 import { Checkbox } from '../Checkbox';
-import { Delivery } from '../../helpers/axios/delivery';
 import { Message, MessageProps } from '../message';
 import { Loading } from '../loading';
 import { SessionValidate } from '../../helpers/session-validate';
@@ -14,6 +14,7 @@ import { SessionStorageValues } from './sessionStorageValues';
 import { RestoresErrorMessage } from './restoresErrorMessage';
 import { ClearStates } from './clearStates';
 import { Login } from '../../helpers/axios/login';
+import { AddClientsLocalStorage } from '@/libs/add-clients-locastorage/add-clients-locastorage';
 
 export const Form = () => {
   const [cpfCnpj, setCpfCnpj] = useState('');
@@ -80,7 +81,6 @@ export const Form = () => {
         deliveredByEmail,
         deliveredByName,
         isDate,
-        token,
         image,
         latitude,
         longitude,
@@ -138,34 +138,22 @@ export const Form = () => {
       return;
     }
 
-    const { error: errorDeliveryCreated, message: deliveryMessage } =
-      await Delivery.create_delivery({
-        params: {
-          deliveredByEmail,
-          deliveredByName,
-          imageReference: image!,
-          latitude: Number(latitude),
-          longitude: Number(longitude),
-          recipient: {
-            cpf_cnpj: formatCPF(cpfCnpj),
-            boletus_id,
-            email,
-            number,
-            someoneAtHome: Boolean(someoneAtHome) ?? false,
-          },
-        },
-        token,
-      });
+    setLoading(false);
 
-    if (errorDeliveryCreated) {
-      setLoading(false);
-      setErrorMesssage({
-        message: deliveryMessage,
-        type: 'error',
-      });
-
-      return;
-    }
+    AddClientsLocalStorage.add({
+      deliveredByEmail,
+      deliveredByName,
+      imageReference: image!,
+      latitude: Number(latitude),
+      longitude: Number(longitude),
+      recipient: {
+        cpf_cnpj: formatCPF(cpfCnpj),
+        boletus_id,
+        email,
+        number,
+        someoneAtHome: Boolean(someoneAtHome) ?? false,
+      },
+    }) as any;
 
     setLoading(false);
 
@@ -243,7 +231,7 @@ export const Form = () => {
           Tirar Foto
         </button>
         <button className="button-submit" type="submit">
-          Enviar
+          Adicinar
         </button>
       </div>
     </form>

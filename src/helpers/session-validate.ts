@@ -1,9 +1,7 @@
-import { redirect } from 'next/navigation';
-
 class SessionValidate {
   static validateDate({ isData }: { isData: string | null }) {
     if (!isData) {
-      redirect('/');
+      window.location.href = '/';
     }
 
     const data = new Date(Number(isData)).getTime();
