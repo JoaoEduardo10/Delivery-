@@ -53,6 +53,12 @@ export const MenuBar = () => {
           alert(message);
           isDeliveryError = true;
 
+          if (message == 'cpf ou cnpj invalido!') {
+            AddClientsLocalStorage.removeClient(
+              data![index].recipient.boletus_id,
+            );
+          }
+
           break;
         }
       }
