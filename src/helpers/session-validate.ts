@@ -9,7 +9,8 @@ class SessionValidate {
     if (Date.now() - data > 71400000) {
       return {
         error: true,
-        message: 'Token inspirado, você será redirecionado!',
+        message:
+          'Token inspirado, os dados do cliente não foram adicnados, você será redirecionado!',
       };
     }
 

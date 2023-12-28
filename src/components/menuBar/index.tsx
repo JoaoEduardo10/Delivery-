@@ -14,7 +14,7 @@ export const MenuBar = () => {
   };
 
   const handleClick = async () => {
-    const confirmData = confirm('Deseja mesmo enviar os cliente?');
+    const confirmData = confirm('Deseja mesmo enviar os clientes?');
 
     if (confirmData) {
       setLoading(true);
@@ -73,7 +73,7 @@ export const MenuBar = () => {
         <AiOutlineCaretRight />
       </div>
 
-      <h2>Deseja adicinar os usuários ao banco?</h2>
+      <h2>Adicinar os usuários</h2>
       <div>
         <button onClick={handleClick} type="button">
           Enviar
