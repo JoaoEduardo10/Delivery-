@@ -1,3 +1,4 @@
+import { Validate } from '@/helpers/validateCpfCnpj';
 import validator from 'validator';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -23,6 +24,14 @@ class FormValidation {
   }: FormValidationProps) {
     if (!cpf) {
       return { error: true, message: 'Adicione um CPF ou CNPJ' };
+    }
+
+    const validateCpf = new Validate();
+
+    const { error, message, data } = validateCpf.cpf_or_cnpj(cpf);
+
+    if (data == null && error && message) {
+      return { error: true, message };
     }
 
     if (!boletus_id) {
