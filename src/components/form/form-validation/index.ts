@@ -34,6 +34,17 @@ class FormValidation {
       return { error: true, message };
     }
 
+    const response = await fetch('/api', {
+      method: 'POST',
+      body: JSON.stringify({ cpf: data }),
+    });
+
+    const dataValidateUser = await response.json();
+
+    if (dataValidateUser.error) {
+      return { error: true, message: 'Cliente invalido!' };
+    }
+
     if (!boletus_id) {
       return { error: true, message: 'Adicione o boleto' };
     }
